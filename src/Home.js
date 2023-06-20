@@ -3,6 +3,7 @@ import BlogList from "./BlogList";
 
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
+  const [isPending, setIsPending] = useState(true);
 
   {/*useEffect is useful to run code that you need to run on every render*/}
   useEffect(() => {
@@ -10,11 +11,13 @@ const Home = () => {
       return res.json();
     }).then(data => {
       setBlogs(data);
+      setIsPending(false);
     })
   }, [])
 
   return (
     <div className="home">
+      { isPending && <div>Loading...</div> }
       {blogs && <BlogList blogs={blogs} title="All Blogs"  /> }
     </div>
   );
